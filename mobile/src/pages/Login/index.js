@@ -13,10 +13,13 @@ export default function Login() {
 
   async function handleLogin() {
     try {
-      const response = await api.post("sessions", { user, password });
+      const response = await api.get("login", { params: user, password });
 
-      if (response) {
-        navigation.navigate("Detail", user);
+      console.log("handleLogin", response.data)
+
+      if (response.data) {
+        const maker = response.data
+        navigation.navigate("ProfilePage", maker);
       } else {
         alert("Usuario ou senha incorreto");
       }
@@ -29,6 +32,14 @@ export default function Login() {
     console.log(user, password)
     const response = await api.post("login", { user, password });
     console.log(response.data)
+    if (response.data) {
+      //const maker = response.data
+
+      //navigation.navigate("ProfilePage", maker);
+    }
+    else {
+      alert("Usuario já existe");
+    }
   }
 
   return (

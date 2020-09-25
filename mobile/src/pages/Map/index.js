@@ -7,18 +7,64 @@ import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
 import styles from "./styles";
 import logoImg from "../../../assets/logo.png";
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 export default function Map() {
   const navigation = useNavigation();
   const [makers, setMakers] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
   const [filters, setFilters] = useState([""]);
+  const [categoryServices, setCategoryServices] = useState([{ filtros: ['', ''] }]);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    //getCategoriesFromServer();
     loadMyInitialPosition();
     loadMakers();
   }, []);
+
+  const items = [
+    // this is the parent or 'item'
+    {
+      name: 'Fruits',
+      id: 0,
+      // these are the children or 'sub items'
+      children: [
+        {
+          name: 'Apple',
+          id: 10,
+        },
+        {
+          name: 'Strawberry',
+          id: 17,
+        },
+        {
+          name: 'Pineapple',
+          id: 13,
+        },
+        {
+          name: 'Banana',
+          id: 14,
+        },
+        {
+          name: 'Watermelon',
+          id: 15,
+        },
+        {
+          name: 'Kiwi fruit',
+          id: 16,
+        },
+      ],
+    },
+  
+  ];
+  
+
+  async function getCategoriesFromServer() {
+    await api.get('/categories').then(response => {
+      setCategoryServices(response.data)
+    })
+  };
 
   async function loadMyInitialPosition() {
     const { granted } = await requestPermissionsAsync();
@@ -95,9 +141,24 @@ export default function Map() {
           style={styles.logginButton}
           onPress={loadMakers}
           title="Reload" />
-      </View>
 
+      </View>
+      <Button
+        style={styles.logginButton}
+        onPress={() => navigation.navigate("TestePage")}
+        title="Reload" />
       <View style={styles.body}>
+      <View>
+        <SectionedMultiSelect
+          single={true}
+          items={items}
+          uniqueKey="id"
+          subKey="children"
+          selectText="Choose some things..."
+          showDropDowns={true}
+          readOnlyHeadings={true}
+        />
+      </View>
         <MapView style={styles.bodyMap}
           initialRegion={currentRegion}
         >
@@ -122,7 +183,7 @@ export default function Map() {
           }
         </MapView>
       </View>
-    </View>
+    </View >
   );
 }
 

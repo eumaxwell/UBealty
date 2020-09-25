@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, Linking, FlatList } from "react-native";
-import Gallery from "react-native-image-gallery";
+import { View, Text, Image, TouchableOpacity, Linking, FlatList, Button } from "react-native";
+//import Gallery from "react-native-gallery";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
@@ -30,10 +30,19 @@ export default function Maker(params, { chosedMaker }) {
       });
     }
   */
+
+
   function sendWhatsapp() {
-    const message = `Hello ${maker.name}, I'd like see you are available about ${date} to meet you`;
+    const message = `Hello ${maker.name}, I'd like see you are available about to meet you`;
     Linking.openURL(`whatsapp://send?phone=${maker.whatsapp}?t=${message}`);
   }
+
+
+  function openInstagram() {
+    Linking.openURL(`instagram://user?username=${maker.instagram}`)
+  }
+
+
 
   useEffect(() => {
     if (action === "Gallery") {
@@ -63,11 +72,12 @@ export default function Maker(params, { chosedMaker }) {
       let arrayImagens = []
       maker.services.map(e => arrayImagens.push({ source: { uri: e.url } }));
 
+      //https://api.instagram.com/v1/users/self/media/recent?max_id=XXXXXXXXXXX
       setScreen(
-        <Gallery
+        /*<Gallery
           style={{ backgroundColor: "white" }}
           images={arrayImagens}
-        /*
+        
         [
         {
           source: require("../../../assets/logo.png"),
@@ -78,10 +88,10 @@ export default function Maker(params, { chosedMaker }) {
         { source: { uri: "http://i.imgur.com/6vOahbP.jpg" } },
         { source: { uri: "http://i.imgur.com/kj5VXtG.jpg" } },
       ]}
-    */
+    
         >
           <Text> 'AAAAAA' </Text>
-        </Gallery>
+        </Gallery>*/
       );
     } else if (action === "Calendar") {
       function onDateSelected(date) {
@@ -116,6 +126,11 @@ export default function Maker(params, { chosedMaker }) {
         </View>
       );
     } else if (action === "Contact") {
+
+      function AAA(){
+        Linking.openURL('https://api.instagram.com/v1/users/self/media/recent')
+      }
+
       setScreen(
         <View>
           <Button
@@ -124,8 +139,14 @@ export default function Maker(params, { chosedMaker }) {
             title="Whatsapp" />
           <Button
             style={styles.logginButton}
-            onPress={sendWhatsapp}
+            onPress={openInstagram}
             title="Instagram" />
+
+          <Button
+            style={styles.logginButton}
+            onPress={AAA}j
+            title="Instagram" />
+
         </View>
       );
     }
@@ -166,7 +187,7 @@ export default function Maker(params, { chosedMaker }) {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => (date ? setAction("Contact") : setAction("Calendar"))}
+          onPress={() => setAction("Contact")}
         >
           <Feather name="arrow-left" size={28} color="#E02041" />
           <Text style={styles.buttonText}>Contact</Text>
