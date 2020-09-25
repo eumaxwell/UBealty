@@ -9,8 +9,10 @@ const routes = Router()
 routes.get('/login', LoginController.index)
 routes.post('/login', LoginController.store)
 
+routes.get('/categories', MakerController.getCategories)
 routes.get('/maker', MakerController.index)
 routes.post('/maker', MakerController.store)
+routes.post('/update_maker', MakerController.update)
 
 routes.get('/search', SearchController.index)
 

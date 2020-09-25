@@ -11,9 +11,9 @@ module.exports = {
         console.log(latitude, longitude, filters)
 
         const makers = await Maker.find({
-            /*services: {
+            'services.category': {
                 $in: filters
-            },*/
+            },
             location: {
                 $near: {
                     $geometry: {
