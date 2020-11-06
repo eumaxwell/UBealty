@@ -15,19 +15,18 @@ export default StyleSheet.create({
   headerAvatar: {},
   headerTitle: {},
   headerDescription: {},
-  
+
   actionBar: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
   },
   button: {},
   buttonText: {},
 
-  body: {flex: 1,},
+  body: { flex: 1, },
   actionTitle: {},
-  
-  
+
+
   galery: {},
 
   servicesList: {
@@ -36,7 +35,7 @@ export default StyleSheet.create({
   service: {},
   serviceDescription: {},
   servicePrice: {},
-  
-  
-  
+
+
+
 });

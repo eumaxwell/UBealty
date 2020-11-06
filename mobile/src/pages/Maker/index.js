@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, Linking, FlatList, Button } from "react-native";
 //import Gallery from "react-native-gallery";
+import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
 import styles from "./styles";
 import CalendarStrip from 'react-native-calendar-strip';
 
-export default function Maker(params, { chosedMaker }) {
+export default function Maker(params) {
 
   const [maker, setMaker] = useState({ name: "" });
   const [action, setAction] = useState();
@@ -42,94 +43,72 @@ export default function Maker(params, { chosedMaker }) {
     Linking.openURL(`instagram://user?username=${maker.instagram}`)
   }
 
+  function onDateSelected(date) {
+    console.log("Selected Date", date)
+}
+
 
 
   useEffect(() => {
     if (action === "Gallery") {
       setScreen(
         <FlatList
-          data={maker.services}
-          style={styles.servicesList}
-          keyExtractor={(service) => String(service.name)}
-          showsVerticalScrollIndicator={false}
-          /*onEndReached={loadIncidents}
-          onEndReachedThreshold={0.2}*/
-          renderItem={({ item: service }) => (
-            <View style={styles.service}>
-              <Text style={styles.serviceDescription}>{service.description}</Text>
-              <Text style={styles.servicePrice}>
-                {Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(service.value)}
-              </Text>
-            </View>
-          )}
+          horizontal
+          data={maker.gallery}
+          renderItem={({ item }) =>
+            <Card>
+              <Card.Cover source={{ uri: item.imageUrl }} />
+              <Card.Content>
+                <Title>{item.title}</Title>
+              </Card.Content>
+            </Card>
+          }
+          keyExtractor={(item, index) => index}
         />
       );
     } else if (action === "Services") {
-
-      let arrayImagens = []
-      maker.services.map(e => arrayImagens.push({ source: { uri: e.url } }));
-
-      //https://api.instagram.com/v1/users/self/media/recent?max_id=XXXXXXXXXXX
       setScreen(
-        /*<Gallery
-          style={{ backgroundColor: "white" }}
-          images={arrayImagens}
-        
-        [
-        {
-          source: require("../../../assets/logo.png"),
-          dimensions: { width: 150, height: 150 },
-        },
-        { source: { uri: "http://i.imgur.com/XP2BE7q.jpg" } },
-        { source: { uri: "http://i.imgur.com/5nltiUd.jpg" } },
-        { source: { uri: "http://i.imgur.com/6vOahbP.jpg" } },
-        { source: { uri: "http://i.imgur.com/kj5VXtG.jpg" } },
-      ]}
-    
-        >
-          <Text> 'AAAAAA' </Text>
-        </Gallery>*/
+        <FlatList
+          horizontal
+          data={maker.services}
+          renderItem={({ item }) =>
+
+            <Card>
+              <Card.Content>
+                <Title>{item.title}</Title>
+                <Paragraph>{item.price}</Paragraph>
+                <Paragraph>{item.category}</Paragraph>
+                <Paragraph>{item.description}</Paragraph>
+              </Card.Content>
+              <Card.Cover source={{ uri: item.imageUrl }} />
+              <Button title="Apagar" onPress={() => eraseService(item.title)} />
+            </Card>
+          }
+          keyExtractor={(item, index) => index}
+        />
       );
     } else if (action === "Calendar") {
-      function onDateSelected(date) {
-        console.log(date)
-      }
       setScreen(
-        <View>
-          <Text>
-            Calendar to render
-            https://github.com/BugiDev/react-native-calendar-strip
-        </Text>
-
-          <CalendarStrip
-            scrollable
-            calendarAnimation={{ type: 'sequence', duration: 30 }}
-            daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: '#9265DC' }}
-            style={{ height: 200, paddingTop: 20, paddingBottom: 10 }}
-            calendarHeaderStyle={{ color: 'white' }}
-            calendarColor={'#3343CE'}
-            dateNumberStyle={{ color: 'white' }}
-            dateNameStyle={{ color: 'white' }}
-            iconContainer={{ flex: 0.1 }}
-            /*customDatesStyles={this.state.customDatesStyles}
-            markedDates={this.state.markedDates}
-            datesBlacklist={this.datesBlacklistFunc}*/
-            onDateSelected={onDateSelected}
-            useIsoWeekday={false}
-          >
-            {/** criar uma lista de texto com os horarios agendados  */}
-          </CalendarStrip>
-
-        </View>
+        <CalendarStrip
+          scrollable
+          calendarAnimation={{ type: 'sequence', duration: 30 }}
+          daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: '#9265DC' }}
+          style={{ height: 200, paddingTop: 20, paddingBottom: 10 }}
+          calendarHeaderStyle={{ color: 'white' }}
+          calendarColor={'#3343CE'}
+          dateNumberStyle={{ color: 'white' }}
+          dateNameStyle={{ color: 'white' }}
+          iconContainer={{ flex: 0.1 }}
+          /*customDatesStyles={this.state.customDatesStyles}
+          markedDates={this.state.markedDates}
+          datesBlacklist={this.datesBlacklistFunc}*/
+          onDateSelected={onDateSelected}
+          useIsoWeekday={false}
+        >
+          {/** criar uma lista de texto com os horarios agendados  */}
+        </CalendarStrip>
       );
     } else if (action === "Contact") {
-
-      function AAA(){
-        Linking.openURL('https://api.instagram.com/v1/users/self/media/recent')
-      }
 
       setScreen(
         <View>
@@ -140,11 +119,6 @@ export default function Maker(params, { chosedMaker }) {
           <Button
             style={styles.logginButton}
             onPress={openInstagram}
-            title="Instagram" />
-
-          <Button
-            style={styles.logginButton}
-            onPress={AAA}j
             title="Instagram" />
 
         </View>

@@ -13,56 +13,26 @@ export default function Map() {
   const navigation = useNavigation();
   const [makers, setMakers] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
-  const [filters, setFilters] = useState([""]);
-  const [categoryServices, setCategoryServices] = useState([{ filtros: ['', ''] }]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [filters, setFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   useEffect(() => {
-    //getCategoriesFromServer();
     loadMyInitialPosition();
     loadMakers();
+    getFiltersFromServer();
   }, []);
 
-  const items = [
-    // this is the parent or 'item'
-    {
-      name: 'Fruits',
-      id: 0,
-      // these are the children or 'sub items'
-      children: [
-        {
-          name: 'Apple',
-          id: 10,
-        },
-        {
-          name: 'Strawberry',
-          id: 17,
-        },
-        {
-          name: 'Pineapple',
-          id: 13,
-        },
-        {
-          name: 'Banana',
-          id: 14,
-        },
-        {
-          name: 'Watermelon',
-          id: 15,
-        },
-        {
-          name: 'Kiwi fruit',
-          id: 16,
-        },
-      ],
-    },
-  
-  ];
-  
+  async function reload() {
+    //loadMyInitialPosition();
+    loadMakers();
+    //getFiltersFromServer();
+  }
 
-  async function getCategoriesFromServer() {
-    await api.get('/categories').then(response => {
-      setCategoryServices(response.data)
+  async function getFiltersFromServer() {
+    await api.get('/filters').then(response => {
+      setFilters(response.data)
+    }).catch(() => {
+      console.log("erro ao carregar filtros")
     })
   };
 
@@ -89,8 +59,10 @@ export default function Map() {
     setCurrentRegion({ region })
   }
 
-  function setModalFilters() {
-    loadMakers()
+  function onSelectedItemsChange(selectedItems) {
+    console.log("onSelectedItemsChange", selectedItems)
+    setSelectedFilters(selectedItems);
+    console.log(selectedFilters)
   }
 
   async function loadMakers() {
@@ -98,13 +70,28 @@ export default function Map() {
 
     if (currentRegion) {
       try {
-        console.log("currentRegion", currentRegion, "filtros", filters)
+        console.log("currentRegion", currentRegion, "filtros", selectedFilters)
+
+        let arrayFilters = [];
+        if (selectedFilters.length != 0) {
+          selectedFilters.map(idFilter => {
+            filters.map((category) => {
+              category.map(item => {
+                if (item.id === idFilter) {
+                  arrayFilters.push(item.name)
+                }
+              })
+            })
+          })
+        }
+
+
         const { latitude, longitude } = currentRegion
         await api.get('/search', {
           params: {
             latitude,
             longitude,
-            filters
+            filters: arrayFilters
           }
         }).then(response => {
           setMakers(response.data)
@@ -137,28 +124,31 @@ export default function Map() {
           onPress={openLogin}
           title="Login"
           accessibilityLabel="Login" />
-        <Button
-          style={styles.logginButton}
-          onPress={loadMakers}
-          title="Reload" />
-
       </View>
       <Button
         style={styles.logginButton}
         onPress={() => navigation.navigate("TestePage")}
         title="Reload" />
       <View style={styles.body}>
-      <View>
-        <SectionedMultiSelect
-          single={true}
-          items={items}
-          uniqueKey="id"
-          subKey="children"
-          selectText="Choose some things..."
-          showDropDowns={true}
-          readOnlyHeadings={true}
-        />
-      </View>
+        <View>
+          <SectionedMultiSelect
+            single={false}
+            showRemoveAll
+            items={filters}
+            uniqueKey="id"
+            subKey="children"
+            selectText="Filtros selecionados..."
+            showDropDowns={true}
+            readOnlyHeadings={true}
+            onSelectedItemsChange={onSelectedItemsChange}
+            selectedItems={selectedFilters}
+          />
+          <Button
+            style={styles.logginButton}
+            onPress={reload}
+            title="Buscar" />
+        </View>
+
         <MapView style={styles.bodyMap}
           initialRegion={currentRegion}
         >

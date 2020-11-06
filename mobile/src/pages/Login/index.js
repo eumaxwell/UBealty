@@ -15,7 +15,8 @@ export default function Login() {
     try {
       const response = await api.get("login", { params: user, password });
 
-      console.log("handleLogin", response.data)
+      //console.log("handleLogin", response.data)
+      console.log("handleLogin - Buscando dados do usuário")
 
       if (response.data) {
         const maker = response.data

@@ -12,6 +12,10 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
+  actionBar:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   headerTitle: {
     fontSize: 30,
     marginBottom: 16,
