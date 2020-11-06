@@ -10,22 +10,38 @@ module.exports = {
 
         console.log(latitude, longitude, filters)
 
-        const makers = await Maker.find({
-            'services.category': {
-                $in: filters
-            },
-            location: {
-                $near: {
-                    $geometry: {
-                        type: 'Point',
-                        coordinates: [longitude, latitude]
-                    },
-                    $maxDistance: 10000
+        let makers;
+        if (filters){
+            makers = await Maker.find({
+                'services.category': {
+                    $in: filters
+                },
+                location: {
+                    $near: {
+                        $geometry: {
+                            type: 'Point',
+                            coordinates: [longitude, latitude]
+                        },
+                        $maxDistance: 10000
+                    }
                 }
-            }
-        })
+            })
+        }else{
+            makers = await Maker.find({
+                location: {
+                    $near: {
+                        $geometry: {
+                            type: 'Point',
+                            coordinates: [longitude, latitude]
+                        },
+                        $maxDistance: 10000
+                    }
+                }
+            })
+        }
+        
         //const makers = await Maker.find();
-        console.log(makers)
+        //console.log(makers)
 
         return res.json(makers)
 
