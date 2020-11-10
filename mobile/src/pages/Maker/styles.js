@@ -3,9 +3,9 @@ import Constants from "expo-constants";
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    // display: 'none',
     paddingHorizontal: 24,
-    paddingTop: Constants.statusBarHeight + 20
+    marginTop: Constants.statusBarHeight + 20
   },
   header: {
     flexDirection: "row",
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   button: {},
   buttonText: {},
 
-  body: { flex: 1, },
+  body: { height: 100, width: 200, },
   actionTitle: {},
 
 

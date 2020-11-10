@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, ImageBackground } from "react-native";
 import { useNavigation, useNavigationBuilder } from "@react-navigation/native";
 import { getCurrentPositionAsync, requestPermissionsAsync } from 'expo-location'
 import api from "../../services/api";
@@ -8,6 +8,7 @@ import logoImg from "../../../assets/logo.png";
 import PrimaryButton from "../../components/PrimaryButton"
 import { Button, TextInput } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
+
 
 export default function Login() {
   const navigation = useNavigation();
@@ -50,9 +51,10 @@ export default function Login() {
     <View style={styles.container}>
 
       <StatusBar style="dark" translucent={true} />
+      <Image source={require('../../../assets/Hairdresser.gif')} style={styles.backgroundImage} />
 
       <View style={styles.header}>
-        <Image source={logoImg} style={{ width: '100%', height: 150 }} />
+        {/* <Image source={logoImg} style={{ width: '100%', height: 150 }} /> */}
       </View>
 
       <View style={styles.body}>
@@ -64,43 +66,47 @@ export default function Login() {
         </View>
 
         <View style={styles.bodyLogin}>
-          <TextInput
-            label="Email"
-            value={user}
-            type="outlined"
-            onChangeText={text => setUser(text)}
-          />
-          <TextInput
-            label="Senha"
-            value={password}
-            type="outlined"
-            onChangeText={text => setPassword(text)}
-          />
-          <Button style={styles.button} mode="contained" onPress={handleLogin}>
-            Login
-        </Button>
+          <View style={styles.bodyLoginInputs}>
+            <TextInput
+              label="Email"
+              value={user}
+              type="outlined"
+              onChangeText={text => setUser(text)}
+            />
+            <TextInput
+              label="Senha"
+              value={password}
+              type="outlined"
+              onChangeText={text => setPassword(text)}
+            />
+          </View>
 
-          <Button style={styles.button} mode="outlined" onPress={handleNewUser}>
-            Criar Novo Usuario
-        </Button>
+          <View style={styles.bodyLoginButtons}>
+            <Button style={styles.button} mode="contained" onPress={handleLogin}>
+              Login
+            </Button>
+
+            <Button style={styles.button} mode="outlined" onPress={handleNewUser}>
+              Criar Novo Usuario
+            </Button>
+          </View>
+
         </View>
 
 
-        <Text>
+        {/* <Text>
           {user}
         </Text>
         <Text>
           {password}
-        </Text>
+        </Text> */}
 
       </View>
 
       <View style={styles.footer}>
-
-        <Button style={styles.button} onPress={() => navigation.navigate("MapPage")}>
-          Pular
-        </Button>
-
+        <TouchableOpacity onPress={() => navigation.navigate("MapPage")}>
+          <Text style={{fontSize: 16, opacity: 0.6}}>Pular</Text>
+        </TouchableOpacity>
       </View>
 
     </View>

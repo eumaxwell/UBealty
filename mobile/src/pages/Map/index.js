@@ -124,6 +124,7 @@ export default function Map() {
             name='md-arrow-back'
             size={30}
             onPress={() => navigation.navigate("TestePage")}
+            color='#FFF'
           />
           <SectionedMultiSelect
             single={false}
@@ -137,6 +138,7 @@ export default function Map() {
             onSelectedItemsChange={onSelectedItemsChange}
             selectedItems={selectedFilters}
             styles={{ selectToggle: { width: Dimensions.get('window').width / 2, padding: 16 } }}
+            colors={{ selectToggleTextColor: '#FFF' }}
           />
           {/* <Button
             style={styles.logginButton}
@@ -148,12 +150,14 @@ export default function Map() {
             name='ios-search'
             size={30}
             onPress={reload}
+            color='#FFF'
           />
           <Ionicons
             style={{ padding: 16 }}
             name='md-person'
             size={30}
             onPress={openLogin}
+            color='#FFF'
           />
         </View>
 

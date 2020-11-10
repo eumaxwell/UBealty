@@ -20,7 +20,7 @@ export default StyleSheet.create({
     // zIndex: 3,
     alignSelf: 'center',
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor: '#9A9AFE',
     height: 60,
     borderRadius: 8,
     elevation: 10

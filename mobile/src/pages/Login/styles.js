@@ -8,11 +8,11 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: '#FFF',
-    paddingHorizontal: 24,
+    // paddingHorizontal: 24,
 
   },
   header: {
-    flex: 1,
+    flex: 4,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -22,49 +22,48 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  headerTitle: {
-    fontSize: 30,
-    marginBottom: 16,
-    marginTop: 48,
-    color: "#13131a",
-    fontWeight: "bold"
-  },
   body: {
     flex: 5,
     justifyContent: 'center',
-    // backgroundColor: 'yellow',
     flexDirection: 'column',
-    padding: 24,
+    paddingHorizontal: 24,
     borderRadius: 8,
   },
+  backgroundImage:{
+    position: 'absolute',
+    top: -60,
+    left: 0,
+    right: 0,
+    width: Dimensions.get('window').width,
+    // height: Dimensions.get('window').height,
+    resizeMode: "contain",
+    // opacity: 0.4
+  },
   bodyAuth: {
-    backgroundColor: '#CECECE',
-    height: 100,
+    height: 50,
     marginVertical: 16,
   },
   bodyLogin: {
     marginVertical: 16,
     flexDirection: 'column',
   },
-  bodyInput: {
-    backgroundColor: 'white',
-    fontSize: 14,
-    color: "#41414d",
-    fontWeight: "bold"
+  bodyLoginInputs: {
+    marginBottom: 24,
   },
   button: {
-    alignSelf: 'center',
-    padding: 12,
+    width: '100%',
+    elevation: 1,
+    borderWidth: 0,
     marginTop: 8,
     height: 54,
+    justifyContent: 'center'
   },
   footer: {
     flex: 1,
     justifyContent: 'center',
-    // backgroundColor: 'green',
+    alignItems: 'center',
   },
   detailsButtonText: {
-    color: "#e02041",
     fontSize: 15,
     fontWeight: "bold"
   }

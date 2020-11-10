@@ -5,7 +5,7 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
-import styles from "./styles";
+import styles from "./styles"
 import CalendarStrip from 'react-native-calendar-strip';
 
 export default function Maker(params) {
