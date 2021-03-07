@@ -65,7 +65,6 @@ export default function Map() {
   function onSelectedItemsChange(selectedItems) {
     console.log("onSelectedItemsChange", selectedItems)
     setSelectedFilters(selectedItems);
-    console.log(selectedFilters)
   }
 
   async function loadMakers() {
@@ -74,19 +73,20 @@ export default function Map() {
     if (currentRegion) {
       try {
         console.log("currentRegion", currentRegion, "filtros", selectedFilters)
-
-        let arrayFilters = [];
-        if (selectedFilters.length != 0) {
-          selectedFilters.map(idFilter => {
-            filters.map((category) => {
-              category.map(item => {
-                if (item.id === idFilter) {
-                  arrayFilters.push(item.name)
+        /*
+                let arrayFilters = [];
+                if (selectedFilters.length != 0) {
+                  selectedFilters.map(idFilter => {
+                    filters.map((category) => {
+                      category.map(item => {
+                        if (item.id === idFilter) {
+                          arrayFilters.push(item.name)
+                        }
+                      })
+                    })
+                  })
                 }
-              })
-            })
-          })
-        }
+                */
 
 
         const { latitude, longitude } = currentRegion
@@ -127,20 +127,24 @@ export default function Map() {
             color='#FFF'
           />
           <SectionedMultiSelect
-            single={false}
-            showRemoveAll
             items={filters}
-            uniqueKey="id"
+            uniqueKey="name"
             subKey="children"
             selectText="Buscar"
-            showDropDowns={true}
-            readOnlyHeadings={true}
             onSelectedItemsChange={onSelectedItemsChange}
             selectedItems={selectedFilters}
+            single={false}
+            showRemoveAll
+            showDropDowns={true}
+            readOnlyHeadings={true}
             styles={{ selectToggle: { width: Dimensions.get('window').width / 2, padding: 16 } }}
             colors={{ selectToggleTextColor: '#FFF' }}
+
           />
-          {/* <Button
+          {/*
+          
+
+          <Button
             style={styles.logginButton}
             onPress={reload}
             title="Buscar"

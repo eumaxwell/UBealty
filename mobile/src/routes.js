@@ -15,9 +15,9 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <AppStack.Navigator screenOptions={{ headerShown: false }}>
-      
-        <AppStack.Screen name="LoginPage" component={LoginPage} />
         <AppStack.Screen name="MapPage" component={MapPage} />
+        <AppStack.Screen name="LoginPage" component={LoginPage} />
+        
         <AppStack.Screen name="PosLogin" component={PosLogin} />
         <AppStack.Screen name="ProfilePage" component={ProfilePage} />
         <AppStack.Screen name="MakerPage" component={MakerPage} />  
